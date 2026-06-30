@@ -42,3 +42,10 @@ export async function login(
 
     return response.data;
 }
+
+export async function getCurrentUser(): Promise<User> {
+
+    const response = await api.get("/users/me");
+
+    return response.data;
+}

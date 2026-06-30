@@ -1,7 +1,72 @@
-import { createContext } from "react";
-import  User  from "../features/auth/types";
+import {
+    createContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
 
-export const AuthContext = createContext(
-  
-null as {user: User | null; setUser: React.Dispatch<React.SetStateAction<User | null>>} | null
-)
+import type { User } from "../features/auth/types";
+import { getCurrentUser } from "../features/auth/services/authService";
+
+interface AuthContextType {
+    user: User | null;
+    loading: boolean;
+}
+
+export const AuthContext = createContext<
+    AuthContextType | undefined
+>(undefined);
+
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+export function AuthProvider({
+    children,
+}: AuthProviderProps) {
+
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        setLoading(false);
+        return;
+    }
+
+    async function loadUser() {
+        try {
+
+            const currentUser = await getCurrentUser();
+
+            setUser(currentUser);
+
+        } catch (error) {
+
+            localStorage.removeItem("token");
+
+            setUser(null);
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    }
+  }, []);
+
+  return (
+      <AuthContext.Provider
+          value={{
+              user,
+              loading,
+          }}
+      >
+          {children}
+      </AuthContext.Provider>
+  );
+
+}
