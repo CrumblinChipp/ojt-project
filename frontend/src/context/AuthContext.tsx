@@ -11,6 +11,9 @@ import { getCurrentUser } from "../features/auth/services/authService";
 interface AuthContextType {
     user: User | null;
     loading: boolean;
+    setUser: React.Dispatch<
+    React.SetStateAction<User | null>
+    >;
 }
 
 export const AuthContext = createContext<
@@ -56,6 +59,8 @@ export function AuthProvider({
 
         }
     }
+
+    loadUser();
   }, []);
 
   return (
@@ -63,6 +68,7 @@ export function AuthProvider({
           value={{
               user,
               loading,
+              setUser,
           }}
       >
           {children}

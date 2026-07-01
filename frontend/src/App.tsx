@@ -1,39 +1,30 @@
-import { register } from "./features/auth/services/authService";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import MainLayout from "./features/home/pages/ExtraHome";
+import Dashboard from "./features/home/pages/Dashboard";
+import ProductList from "./features/home/pages/ProductList";
+import StaffList from "./features/home/pages/StaffList";
 
-import Button from "./components/ui/Button";
+const App: React.FC = () => {
+  const handleLogout = () => {
+    // TODO: clear auth state / tokens, then redirect to login
+    console.log("logging out...");
+  };
 
-export default function App() {
+  return (
+    <BrowserRouter>
+      <div className="flex h-screen w-full items-center justify-center bg-neutral-200 p-4">
+        <Routes>
+          <Route element={<MainLayout onLogout={handleLogout} />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/staff" element={<StaffList />} />
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+};
 
-    async function testRegister() {
-
-        try {
-
-            const user = await register({
-                email: "test123@example.com",
-                name: "Test User",
-                organization: "Testing Inc.",
-                password: "password123",
-            });
-
-            console.log(user);
-
-            alert("Registration successful!");
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Registration failed.");
-
-        }
-
-    }
-
-    return (
-        <div className="min-h-screen flex items-center justify-center">
-            <Button onClick={testRegister}>
-                Test Register
-            </Button>
-        </div>
-    );
-}
+export default App;

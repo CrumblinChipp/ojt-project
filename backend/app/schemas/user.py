@@ -11,7 +11,13 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
-
+    
+class UserUpdate(BaseModel):
+    email: EmailStr
+    name: str
+    organization: str
+    password: str
+    is_admin: bool
 
 class UserResponse(BaseModel):
     id: int

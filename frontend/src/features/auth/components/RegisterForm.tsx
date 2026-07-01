@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../../../components/ui/Button";
 import Card from "../../../components/ui/Card";
 import Input from "../../../components/ui/Input";
+import { useAuth } from "../../../hooks/useAuth";
 
-import { register } from "../services/authService";
+import {
+    register,
+    login,
+    getCurrentUser,
+} from "../services/authService";
 
 export default function Register() {
     const navigate = useNavigate();
+    const { setUser } = useAuth();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -41,9 +47,23 @@ export default function Register() {
 
             await register(formData);
 
+            const loginResponse = await login({
+                email: formData.email,
+                password: formData.password,
+            });
+
+            localStorage.setItem(
+                "token",
+                loginResponse.access_token
+            );
+
+            const currentUser = await getCurrentUser();
+
+            setUser(currentUser);
+            
             alert("Registration successful!");
 
-            navigate("/");
+            navigate("/home");
 
         } catch (err: any) {
 
@@ -115,16 +135,6 @@ export default function Register() {
                         {loading ? "Creating Account..." : "Register"}
                     </Button>
                 </form>
-
-                <p className="mt-6 text-center text-sm">
-                    Already have an account?{" "}
-                    <Link
-                        to="/"
-                        className="font-semibold text-grey-900 hover:underline"
-                    >
-                        Login
-                    </Link>
-                </p>
             </Card>
     );
 }

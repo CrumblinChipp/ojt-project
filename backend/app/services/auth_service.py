@@ -2,6 +2,12 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 from app.schemas.user import UserCreate
+from app.models.product import Product
+from app.schemas.product import ProductCreate
+from app.models.active_borrowing import ActiveBorrowing
+from app.schemas.active_borrowing import ActiveBorrowingCreate
+from app.models.audit_log import AuditLog
+from app.schemas.audit_log import AuditLogCreate
 from app.utils.security import hash_password
 
 from app.utils.security import (
@@ -35,7 +41,7 @@ def register_user(
     db.refresh(new_user)
 
     return new_user
-  
+
 def login_user(
     db: Session,
     email: str,

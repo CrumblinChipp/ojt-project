@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 import Button from "../../../components/ui/Button";
 import Card from "../../../components/ui/Card";
 import Input from "../../../components/ui/Input";
+import { useAuth } from "../../../hooks/useAuth";
 
-import { login } from "../services/authService";
+
+import { login, getCurrentUser } from "../services/authService";
 
 export default function Login() {
     const navigate = useNavigate();
+    const { setUser } = useAuth();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -43,6 +47,10 @@ export default function Login() {
                 response.access_token   
             );
 
+            const currentUser = await getCurrentUser();
+
+            setUser(currentUser);
+            
             alert("Login successful!");
 
             navigate("/home");
@@ -98,16 +106,6 @@ export default function Login() {
                         {loading ? "Logging in..." : "Log in"}
                     </Button>
                 </form>
-
-                <p className="mt-6 text-center text-sm">
-                    Don't have an account?{" "}
-                    <Link
-                        to="/register"
-                        className="font-semibold text-grey-900 hover:underline"
-                    >
-                        Register
-                    </Link>
-                </p>
             </Card>
     );
 }
