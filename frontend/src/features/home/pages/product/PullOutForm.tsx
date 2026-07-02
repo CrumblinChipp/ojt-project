@@ -73,7 +73,9 @@ export default function PullOutForm({
         <>
             <Card>
                 <div className="flex flex-col gap-4">
-
+                        <h3 className="mb-2 text-lg font-semibold text-green-700">
+                            Pull Out Product
+                        </h3>
                     {/* Product Information */}
                     <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
                         <h3 className="mb-2 text-lg font-semibold text-emerald-700">

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, ConfigDict
+from datetime import date
 
 class ProductCreate(BaseModel):
   name: str
@@ -35,13 +36,23 @@ class StockInRequest(BaseModel):
 
 class DeleteRequest(BaseModel):
   product_id: int
+  
+class DeleteProductPreview(BaseModel):
+  product: ProductResponse
+  audit_log_count: int
+  active_borrowing_count: int
+
+class ReturnProductRequest(BaseModel):
+    active_borrowing_id: int
 
 class ProductUpdate(BaseModel):
+  product_id: int
   name: str
   is_consumable: bool
   sub_category: str
   max_stock: int
-  current_stock: int
-  status: str
   description: str
   
+class DeleteAuditLogsRequest(BaseModel):
+    start_date: date
+    end_date: date

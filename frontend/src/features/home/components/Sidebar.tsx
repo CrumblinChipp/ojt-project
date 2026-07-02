@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import type { NavItem } from "../../auth/types";
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", path: "/dashboard" },
-  { label: "Product List", path: "/products" },
-  { label: "Staff List", path: "/staff" },
+  { label: "Dashboard", path: "/home/dashboard" },
+  { label: "Product List", path: "/home/products" },
+  { label: "Staff List", path: "/home/staff" },
 ];
 
 const Sidebar: React.FC = () => {

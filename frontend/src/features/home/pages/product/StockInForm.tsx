@@ -67,6 +67,9 @@ export default function StockInForm({
         <>
             <Card>
                 <div className="flex flex-col gap-4">
+                        <h3 className="mb-2 text-lg font-semibold text-indigo-700">
+                            Stock in Product
+                        </h3>
 
                     {/* Product Information */}
                     <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
@@ -90,7 +93,7 @@ export default function StockInForm({
                     />
 
                     <button
-                        className="mt-4 w-full rounded-lg bg-emerald-500 px-4 py-2 text-white transition-colors hover:bg-emerald-600"
+                        className="mt-4 w-full rounded-lg bg-indigo-500 px-4 py-2 text-white transition-colors hover:bg-indigo-600"
                         onClick={() => {
                             if (
                                 !formData.quantity

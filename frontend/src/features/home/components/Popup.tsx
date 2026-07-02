@@ -3,7 +3,7 @@ import React from "react";
 interface PopupProps {
     message: React.ReactNode;
     onClose: () => void;
-    confirmationLogic?: () => void; // Optional function to handle confirmation logic
+    confirmationLogic?: () => Promise<void> | void;
     borderColorClass?: string;
 }
 
@@ -25,10 +25,13 @@ export default function Popup({
 
                 {/* Button Container */}
                 <div className="flex gap-4">
-                    <button 
+                    <button
                         className="flex-1 bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-600 transition-colors font-medium"
-                        onClick={() => {
-                            {confirmationLogic && confirmationLogic()}
+                        onClick={async () => {
+                            if (confirmationLogic) {
+                                await confirmationLogic();
+                            }
+
                             console.log("Confirmed!");
                             onClose();
                         }}

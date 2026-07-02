@@ -11,7 +11,6 @@ export default function Card({
         <div
             className="
                 w-full
-                max-w-md
                 rounded-xl
                 p-8
             "

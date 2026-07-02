@@ -53,7 +53,7 @@ export default function Login() {
             
             alert("Login successful!");
 
-            navigate("/home");
+            navigate("/home/dashboard");
 
         } catch (err: any) {
 

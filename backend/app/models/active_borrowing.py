@@ -2,6 +2,7 @@ from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime
 from datetime import datetime
 
 from app.database.database import Base
+from sqlalchemy.orm import relationship
 
 
 class ActiveBorrowing(Base):
@@ -24,3 +25,5 @@ class ActiveBorrowing(Base):
     due_date = Column(DateTime, nullable=False)
     
     status = Column(String(255), nullable=False)
+    
+    user = relationship("User", back_populates="active_borrowings")

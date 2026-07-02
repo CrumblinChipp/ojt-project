@@ -49,3 +49,7 @@ export async function getCurrentUser(): Promise<User> {
 
     return response.data;
 }
+
+export const logout = () => {
+    localStorage.removeItem("token");
+};

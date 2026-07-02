@@ -18,7 +18,8 @@ export default function actionCard({
                 className={`
                     relative
                     w-full
-                    max-w-md
+                    max-w-5xl
+                    flex-none
                     rounded-xl
                     p-8
                     bg-gray-200

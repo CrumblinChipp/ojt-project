@@ -1,4 +1,5 @@
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr 
+from typing import Optional
 
 
 class UserCreate(BaseModel):
@@ -31,3 +32,12 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class StaffUpdateRequest(BaseModel):
+    name: str
+    email: EmailStr
+    organization: str
+
+
+class StaffRoleUpdateRequest(BaseModel):
+    is_admin: bool

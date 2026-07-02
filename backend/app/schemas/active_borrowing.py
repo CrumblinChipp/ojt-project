@@ -1,5 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
+from app.schemas.user import UserResponse
+
 class ActiveBorrowingCreate(BaseModel):
     user_id: int
     product_id: int
@@ -8,14 +10,19 @@ class ActiveBorrowingCreate(BaseModel):
     due_date: str
     status: str
 
-class activeBorrowingResponse(BaseModel):
+class ActiveBorrowingResponse(BaseModel):
     id: int
     user_id: int
     product_id: int
+    recipient: str
+    organization: str
     quantity: int
-    date_borrowed: str
+    borrow_date: str
     due_date: str
+
     status: str
+    
+    user: UserResponse
 
     model_config = ConfigDict(from_attributes=True)
     

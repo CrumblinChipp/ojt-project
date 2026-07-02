@@ -35,6 +35,46 @@ export interface Product {
     created_at: string;
 }
 
+export interface DeletePreview {
+    product: Product;
+    audit_log_count: number;
+    active_borrowing_count: number;
+}
+
+export interface AuditLog {
+    id: number;
+    user_id: number;
+    product_id: number;
+    recipient: string;
+    organization: string;
+    quantity: number;
+    action: string;
+    date: string;
+    description: string;
+
+    user: {
+        id: number;
+        name: string;
+    };
+}
+
+export interface ActiveBorrowing {
+    id: number;
+    user_id: number;
+    product_id: number;
+    recipient: string;
+    quantity: number;
+    borrow_date: string;
+    due_date: string;
+
+    status: string;
+
+    user: {
+        id: number;
+        name: string;
+    };
+}
+
 export interface NavItem {
     label: string;
     path: string;

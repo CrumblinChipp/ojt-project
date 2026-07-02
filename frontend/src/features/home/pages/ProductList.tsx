@@ -1,4 +1,5 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 
 import ProductTable from "../components/productTable";
 import ProductForm from "./product/AddProductForm";
@@ -10,44 +11,48 @@ import type { Product } from "../../auth/types";
 
 
 export default function ProductList() {
-  const [activeAction, setActiveAction] = useState<null | 'add' | 'pull-out'>(null);
-  const [products, setProducts] = useState<Product[]>([]);
+    
+    const { user: currentUser } = useAuth();
+    const [activeAction, setActiveAction] = useState<null | 'add' | 'pull-out'>(null);
+    const [products, setProducts] = useState<Product[]>([]);
 
-  const loadProducts = async () => {
-      try {
-          const data = await getProducts();
-          setProducts(data);
-      } catch (error) {
-          console.error(error);
-      }
-  };
+    const loadProducts = async () => {
+        try {
+            const data = await getProducts();
+            setProducts(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  useEffect(() => {
-      loadProducts();
-  }, []);
+    useEffect(() => {
+        loadProducts();
+    }, []);
 
-  return(
+    return(
     <div>
 
-        <button 
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors mr-2"
-            onClick={() => setActiveAction('add')}
-        >
-            Add Product
-        </button>
-        {activeAction && (
-          <ActionCard
-                onClose={() => {
-                setActiveAction(null);
-            }}
-            borderColorClass="border-emerald-500">
-            <ProductForm/>
-          </ActionCard>
+        {currentUser && currentUser.is_admin && (
+            <button 
+                className="bg-green-500 text-white px-4 py-2 m-2 rounded hover:bg-green-600 transition-colors mr-2"
+                onClick={() => setActiveAction('add')}
+            >
+                Add Product
+            </button>
         )}
+        {activeAction && (
+            <ActionCard
+                    onClose={() => {
+                    setActiveAction(null);
+                }}
+                borderColorClass="border-emerald-500">
+                <ProductForm/>
+            </ActionCard>
+            )}
 
-      <ProductTable products={products} />
-      
-    </div>
-  )
+        <ProductTable products={products} />
+        
+        </div>
+    )
 }
 
